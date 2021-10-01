@@ -36,4 +36,9 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     public void createNeighbour(Neighbour neighbour) {
         neighbours.add(neighbour);
     }
+
+    public Neighbour getNeighbour(int position)
+    {
+        return neighbours.get(position);
+    }
 }

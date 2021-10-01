@@ -27,4 +27,11 @@ public interface NeighbourApiService {
      * @param neighbour
      */
     void createNeighbour(Neighbour neighbour);
+
+    /**
+     * Create a neighbour
+     * @param position
+     * @return {@link Neighbour}
+     */
+    Neighbour getNeighbour(int position);
 }

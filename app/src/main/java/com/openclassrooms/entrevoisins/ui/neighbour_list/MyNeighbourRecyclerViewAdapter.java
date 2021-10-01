@@ -1,5 +1,10 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import static android.support.v4.content.ContextCompat.startActivity;
+
+import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +26,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+interface MyNeighbourCallback {
+    void onClickNeighbour(int position);
+}
+
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
+    private final MyNeighbourCallback myNeighbourCallback;
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, MyNeighbourCallback myNeighbourCallbackInterface) {
         mNeighbours = items;
+        myNeighbourCallback = myNeighbourCallbackInterface;
     }
 
     @Override
@@ -49,6 +60,13 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myNeighbourCallback.onClickNeighbour(position);
             }
         });
     }
