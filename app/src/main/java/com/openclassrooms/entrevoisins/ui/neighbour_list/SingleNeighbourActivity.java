@@ -5,8 +5,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
@@ -21,6 +24,8 @@ public class SingleNeighbourActivity extends AppCompatActivity {
     public static final String EXTRA_INT = "extra.int";
 
     /***** Lajout Contents *****/
+    @BindView(R.id.user_avatar)
+    public ImageView mUserAvatar;
     @BindView(R.id.user_name)
     public TextView mUserName;
     @BindView(R.id.user_address)
@@ -52,6 +57,12 @@ public class SingleNeighbourActivity extends AppCompatActivity {
         position = intent.getIntExtra(SingleNeighbourActivity.EXTRA_INT, 0);
 
         mNeighbourSelected = mApiService.getNeighbour(position);
+
+        //mUserAvatar.setImageResource(mNeighbourSelected.getAvatarUrl());
+        Glide.with(mUserAvatar.getContext())
+                .load(mNeighbourSelected.getAvatarUrl())
+                .apply(RequestOptions.circleCropTransform())
+                .into(mUserAvatar);
 
         mUserName.setText(mNeighbourSelected.getName());
         mUserAddress.setText(mNeighbourSelected.getAddress());
