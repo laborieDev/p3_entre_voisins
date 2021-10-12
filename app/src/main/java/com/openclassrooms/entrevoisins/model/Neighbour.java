@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.model;
 
+import android.support.v4.app.ServiceCompat;
+
 import java.util.Objects;
 
 /**

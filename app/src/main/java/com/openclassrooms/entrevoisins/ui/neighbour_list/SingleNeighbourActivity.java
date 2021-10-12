@@ -28,6 +28,8 @@ public class SingleNeighbourActivity extends AppCompatActivity {
     public ImageView mUserAvatar;
     @BindView(R.id.user_name)
     public TextView mUserName;
+    @BindView(R.id.user_name_img)
+    public TextView mUserNameImg;
     @BindView(R.id.user_address)
     public TextView mUserAddress;
     @BindView(R.id.user_phone)
@@ -58,12 +60,12 @@ public class SingleNeighbourActivity extends AppCompatActivity {
 
         mNeighbourSelected = mApiService.getNeighbour(position);
 
-        //mUserAvatar.setImageResource(mNeighbourSelected.getAvatarUrl());
         Glide.with(mUserAvatar.getContext())
                 .load(mNeighbourSelected.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(mUserAvatar);
 
+        mUserNameImg.setText(mNeighbourSelected.getName());
         mUserName.setText(mNeighbourSelected.getName());
         mUserAddress.setText(mNeighbourSelected.getAddress());
         mUserPhone.setText(mNeighbourSelected.getPhoneNumber());
