@@ -2,12 +2,13 @@ package com.openclassrooms.entrevoisins.model;
 
 import android.support.v4.app.ServiceCompat;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Model object representing a Neighbour
  */
-public class Neighbour {
+public class Neighbour implements Serializable {
 
     /** Identifier */
     private long id;

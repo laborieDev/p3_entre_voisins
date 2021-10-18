@@ -21,8 +21,6 @@ import butterknife.ButterKnife;
 
 public class SingleNeighbourActivity extends AppCompatActivity {
 
-    public static final String EXTRA_INT = "extra.int";
-
     /***** Lajout Contents *****/
     @BindView(R.id.user_avatar)
     public ImageView mUserAvatar;
@@ -40,7 +38,6 @@ public class SingleNeighbourActivity extends AppCompatActivity {
     public TextView mUserDescription;
 
     /***** Get Neighbour Variables *****/
-    int position;
     NeighbourApiService mApiService;
     Neighbour mNeighbourSelected;
 
@@ -56,9 +53,7 @@ public class SingleNeighbourActivity extends AppCompatActivity {
         mApiService = DI.getNeighbourApiService();
 
         Intent intent = getIntent();
-        position = intent.getIntExtra(SingleNeighbourActivity.EXTRA_INT, 0);
-
-        mNeighbourSelected = mApiService.getNeighbour(position);
+        mNeighbourSelected = (Neighbour) intent.getSerializableExtra("Neighbour");
 
         Glide.with(mUserAvatar.getContext())
                 .load(mNeighbourSelected.getAvatarUrl())
@@ -77,9 +72,10 @@ public class SingleNeighbourActivity extends AppCompatActivity {
      * Used to navigate to this activity
      * @param activity
      */
-    public static void navigate(FragmentActivity activity, int position) {
+    public static void navigate(FragmentActivity activity, Neighbour neighbour) {
         Intent intent = new Intent(activity, SingleNeighbourActivity.class);
-        intent.putExtra(SingleNeighbourActivity.EXTRA_INT, position);
+        //intent.putExtra(SingleNeighbourActivity.EXTRA_INT, position);
+        intent.putExtra("Neighbour", neighbour);
         ActivityCompat.startActivity(activity, intent, null);
     }
 }

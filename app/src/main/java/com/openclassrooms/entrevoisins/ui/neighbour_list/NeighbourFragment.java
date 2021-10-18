@@ -92,7 +92,7 @@ public class NeighbourFragment extends Fragment implements MyNeighbourCallback {
     }
 
     @Override
-    public void onClickNeighbour(int position) {
-        SingleNeighbourActivity.navigate(this.getActivity(), position);
+    public void onClickNeighbour(Neighbour neighbour) {
+        SingleNeighbourActivity.navigate(this.getActivity(), neighbour);
     }
 }

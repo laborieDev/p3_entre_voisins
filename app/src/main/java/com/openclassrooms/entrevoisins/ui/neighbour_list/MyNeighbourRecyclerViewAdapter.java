@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 interface MyNeighbourCallback {
-    void onClickNeighbour(int position);
+    void onClickNeighbour(Neighbour neighbour);
 }
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
@@ -67,7 +67,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myNeighbourCallback.onClickNeighbour(position);
+                myNeighbourCallback.onClickNeighbour(neighbour);
             }
         });
     }
