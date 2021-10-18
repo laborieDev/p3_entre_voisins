@@ -62,7 +62,6 @@ public class SingleNeighbourActivity extends AppCompatActivity {
 
         Glide.with(mUserAvatar.getContext())
                 .load(mNeighbourSelected.getAvatarUrl())
-                .apply(RequestOptions.circleCropTransform())
                 .into(mUserAvatar);
 
         mUserNameImg.setText(mNeighbourSelected.getName());

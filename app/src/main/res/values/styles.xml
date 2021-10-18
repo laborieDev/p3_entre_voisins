@@ -17,4 +17,19 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Resume_Neighbour_Item">
+        <item name="android:layout_marginTop">3pt</item>
+        <item name="android:layout_marginBottom">3pt</item>
+    </style>
+
+    <style name="Normal_Drawable">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Smaller_Drawable">
+        <item name="android:textSize">20sp</item>
+        <item name="android:scaleX">0.8</item>
+        <item name="android:scaleY">0.8</item>
+    </style>
+
 </resources>

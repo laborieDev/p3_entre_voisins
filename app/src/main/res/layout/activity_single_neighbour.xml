@@ -1,135 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:fillViewport="true"
+    style="@android:style/Widget.DeviceDefault.Light.ScrollView"
     android:layout_height="match_parent"
-    tools:context=".ui.neighbour_list.SingleNeighbourActivity"
-    >
+    android:layout_width="match_parent"
+    android:background="#EBEFF0"
+    android:visibility="visible"
+    tools:ignore="SpeakableTextPresentCheck"
+    tools:visibility="visible">
 
-    <ScrollView
-        style="@android:style/Widget.DeviceDefault.Light.ScrollView"
-        android:layout_width="409dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:padding="10pt"
-        android:background="#EBEFF0"
-        android:scrollbarStyle="outsideInset"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck"
-        tools:visibility="visible">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
 
-        <android.support.constraint.ConstraintLayout
+        <ImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="0dp"
+            android:layout_height="252dp"
+            android:adjustViewBounds="false"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/user_name_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginBottom="20dp"
+            tools:text="@string/app_name"
+            android:textSize="20dp"
+            android:textColor="#fff"
+            app:layout_constraintStart_toStartOf="@+id/user_avatar"
+            app:layout_constraintBottom_toBottomOf="@+id/user_avatar" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/resumeCardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="182dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_avatar">
 
-            <ImageView
-                android:id="@+id/user_avatar"
-                android:layout_width="357dp"
-                android:layout_height="252dp"
-                android:adjustViewBounds="false"
-                android:scaleType="centerCrop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/user_name_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="216dp"
-                android:text="TextView"
-                android:textSize="20dp"
-                android:textColor="#fff"
-                app:layout_constraintStart_toStartOf="@+id/user_avatar"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/resumeCardView"
-                android:layout_width="357dp"
-                android:layout_height="146dp"
-                android:layout_marginTop="24dp"
-                android:padding="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_avatar">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="179dp"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:id="@+id/user_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textIsSelectable="false"
-                        android:textSize="18dp"
-                        android:layout_marginBottom="10dp"/>
-
-                    <TextView
-                        android:id="@+id/user_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
-
-                    <TextView
-                        android:id="@+id/user_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:drawableStart="@drawable/ic_account" />
-
-                    <TextView
-                        android:id="@+id/user_web"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:layout_constraintStart_toEndOf="@id/resumeCardView"
-                app:layout_constraintTop_toBottomOf="@id/resumeCardView">
+                android:layout_height="179dp"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/user_name"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    tools:text="@string/app_name"
+                    android:textIsSelectable="false"
+                    android:textSize="18dp" />
 
-                    <TextView
-                        android:id="@+id/textView8"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="A propos de moi"
-                        android:textIsSelectable="false"
-                        android:textSize="18dp" />
+                <TextView
+                    android:id="@+id/user_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_phone"
+                    style="@style/Resume_Neighbour_Item"
+                    tools:text="@string/app_name" />
 
-                    <TextView
-                        android:id="@+id/user_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
+                <TextView
+                    android:id="@+id/user_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_maps_marker"
+                    style="@style/Resume_Neighbour_Item"
+                    tools:text="@string/app_name" />
 
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                <TextView
+                    android:id="@+id/user_web"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_link"
+                    style="@style/Resume_Neighbour_Item"
+                    tools:text="@string/app_name" />
+            </LinearLayout>
 
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+        </android.support.v7.widget.CardView>
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintStart_toEndOf="@id/resumeCardView"
+            app:layout_constraintTop_toBottomOf="@id/resumeCardView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="A propos de moi"
+                    android:textIsSelectable="false"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/user_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/app_name" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:labelFor="@id/user_avatar"
+            app:backgroundTint="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/resumeCardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.811"
+            app:layout_constraintStart_toEndOf="@+id/user_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/user_name_img"
+            app:layout_constraintVertical_bias="0.3"
+            app:srcCompat="@drawable/ic_yellow_star"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
