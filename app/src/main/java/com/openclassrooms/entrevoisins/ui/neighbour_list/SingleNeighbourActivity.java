@@ -1,12 +1,15 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -17,11 +20,12 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class SingleNeighbourActivity extends AppCompatActivity {
 
-    /***** Lajout Contents *****/
+    /***** Layout Contents *****/
     @BindView(R.id.user_avatar)
     public ImageView mUserAvatar;
     @BindView(R.id.user_name)
@@ -37,8 +41,7 @@ public class SingleNeighbourActivity extends AppCompatActivity {
     @BindView(R.id.user_description)
     public TextView mUserDescription;
 
-    /***** Get Neighbour Variables *****/
-    NeighbourApiService mApiService;
+    /***** Get Neighbour Object *****/
     Neighbour mNeighbourSelected;
 
     //public boolean isFavorite = false;
@@ -49,8 +52,6 @@ public class SingleNeighbourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_neighbour);
         ButterKnife.bind(this);
-
-        mApiService = DI.getNeighbourApiService();
 
         Intent intent = getIntent();
         mNeighbourSelected = (Neighbour) intent.getSerializableExtra("Neighbour");
@@ -67,6 +68,27 @@ public class SingleNeighbourActivity extends AppCompatActivity {
         mUserDescription.setText(mNeighbourSelected.getAboutMe());
     }
 
+    @OnClick(R.id.add_to_favorites)
+    void addToFavorites()
+    {
+        String message;
+
+        if (mNeighbourSelected.getIsFavorite()) {
+            mNeighbourSelected.isNotFavorite();
+            message = mNeighbourSelected.getName() + " a bien été retiré(e) de vos favoris";
+        } else {
+            mNeighbourSelected.isFavorite();
+            message = mNeighbourSelected.getName() + " a bien été ajouté(e) à vos favoris";
+        }
+
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.go_to_list)
+    void goToList() {
+        Intent intent = new Intent(this, ListNeighbourActivity.class);
+        startActivity(intent);
+    }
 
     /**
      * Used to navigate to this activity

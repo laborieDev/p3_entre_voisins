@@ -34,4 +34,9 @@ public interface NeighbourApiService {
      * @return {@link Neighbour}
      */
     Neighbour getNeighbour(int position);
+
+    /**
+     * Get all Favorites
+     */
+    List<Neighbour> getNeighboursFavorites();
 }

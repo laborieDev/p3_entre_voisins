@@ -28,6 +28,8 @@ public class NeighbourFragment extends Fragment implements MyNeighbourCallback {
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
 
+    public boolean isFavoriteTab = false;
+
 
     /**
      * Create and return a new instance
@@ -45,13 +47,21 @@ public class NeighbourFragment extends Fragment implements MyNeighbourCallback {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view;
+
+        if(isFavoriteTab) {
+            /* @TODO: A changer */
+            view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
+        } else {
+            view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
+        }
+
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+
         return view;
     }
 
