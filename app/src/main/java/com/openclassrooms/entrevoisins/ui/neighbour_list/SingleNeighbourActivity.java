@@ -1,11 +1,13 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import butterknife.BindView;
@@ -40,18 +43,26 @@ public class SingleNeighbourActivity extends AppCompatActivity {
     public TextView mUserWeb;
     @BindView(R.id.user_description)
     public TextView mUserDescription;
+    @BindView(R.id.add_to_favorites)
+    public FloatingActionButton mAddToFavorites;
+    @BindView(R.id.remove_to_favorites)
+    public FloatingActionButton mRemoveToFavorites;
 
     /***** Get Neighbour Object *****/
     Neighbour mNeighbourSelected;
+    NeighbourApiService mApiService;
 
     //public boolean isFavorite = false;
     //private String favTab;
 
     @Override
+    @SuppressLint({"RestrictedApi", "WrongConstant"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_neighbour);
         ButterKnife.bind(this);
+
+        mApiService = DI.getNeighbourApiService();
 
         Intent intent = getIntent();
         mNeighbourSelected = (Neighbour) intent.getSerializableExtra("Neighbour");
@@ -66,22 +77,53 @@ public class SingleNeighbourActivity extends AppCompatActivity {
         mUserPhone.setText(mNeighbourSelected.getPhoneNumber());
         mUserWeb.setText("www.facebook.fr/" + mNeighbourSelected.getName().toLowerCase());
         mUserDescription.setText(mNeighbourSelected.getAboutMe());
-    }
-
-    @OnClick(R.id.add_to_favorites)
-    void addToFavorites()
-    {
-        String message;
 
         if (mNeighbourSelected.getIsFavorite()) {
-            mNeighbourSelected.isNotFavorite();
-            message = mNeighbourSelected.getName() + " a bien été retiré(e) de vos favoris";
+            mAddToFavorites.setVisibility(View.NO_ID);
         } else {
-            mNeighbourSelected.isFavorite();
-            message = mNeighbourSelected.getName() + " a bien été ajouté(e) à vos favoris";
+            mRemoveToFavorites.setVisibility(View.VISIBLE);
         }
 
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        mAddToFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message;
+
+                if (mNeighbourSelected.getIsFavorite()) {
+                    return;
+                }
+
+                mNeighbourSelected.isFavorite();
+                message = mNeighbourSelected.getName() + " a bien été ajouté(e) à vos favoris";
+
+                mApiService.saveNeighbour(mNeighbourSelected);
+                mAddToFavorites.setVisibility(View.NO_ID);
+                mRemoveToFavorites.setVisibility(View.VISIBLE);
+
+                Toast.makeText(SingleNeighbourActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mRemoveToFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message;
+
+                if (!mNeighbourSelected.getIsFavorite()) {
+                    return;
+                }
+
+                mNeighbourSelected.isNotFavorite();
+                message = mNeighbourSelected.getName() + " a bien été retiré(e) de vos favoris";
+
+                mApiService.saveNeighbour(mNeighbourSelected);
+                mRemoveToFavorites.setVisibility(View.NO_ID);
+                mAddToFavorites.setVisibility(View.VISIBLE);
+
+                Toast.makeText(SingleNeighbourActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @OnClick(R.id.go_to_list)
@@ -96,7 +138,6 @@ public class SingleNeighbourActivity extends AppCompatActivity {
      */
     public static void navigate(FragmentActivity activity, Neighbour neighbour) {
         Intent intent = new Intent(activity, SingleNeighbourActivity.class);
-        //intent.putExtra(SingleNeighbourActivity.EXTRA_INT, position);
         intent.putExtra("Neighbour", neighbour);
         ActivityCompat.startActivity(activity, intent, null);
     }

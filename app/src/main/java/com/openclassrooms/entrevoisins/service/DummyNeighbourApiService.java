@@ -57,4 +57,13 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
         return favoritesList;
     }
+
+    /**
+     * Save changements of neighbour
+     */
+    public void saveNeighbour(Neighbour neighbour)
+    {
+        int position = neighbours.indexOf(neighbour);
+        neighbours.set(position, neighbour);
+    }
 }

@@ -39,4 +39,10 @@ public interface NeighbourApiService {
      * Get all Favorites
      */
     List<Neighbour> getNeighboursFavorites();
+
+    /**
+     * Save changements of neighbour
+     * @param neighbour
+     */
+    void saveNeighbour(Neighbour neighbour);
 }

@@ -28,15 +28,21 @@ public class NeighbourFragment extends Fragment implements MyNeighbourCallback {
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
 
-    public boolean isFavoriteTab = false;
+    private static final String POSITION = "position";
 
+    public boolean isFavoriteTab = false;
 
     /**
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance() {
+    public static NeighbourFragment newInstance(boolean isFavoriteTab) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(POSITION, isFavoriteTab);
+
         NeighbourFragment fragment = new NeighbourFragment();
+        fragment.setArguments(bundle);
+
         return fragment;
     }
 
@@ -44,19 +50,16 @@ public class NeighbourFragment extends Fragment implements MyNeighbourCallback {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
+
+        if (getArguments() != null) {
+            isFavoriteTab = getArguments().getBoolean(POSITION);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view;
-
-        if(isFavoriteTab) {
-            /* @TODO: A changer */
-            view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
-        } else {
-            view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
-        }
-
+        view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -69,7 +72,12 @@ public class NeighbourFragment extends Fragment implements MyNeighbourCallback {
      * Init the List of neighbours
      */
     private void initList() {
-        mNeighbours = mApiService.getNeighbours();
+        if (!isFavoriteTab) {
+            mNeighbours = mApiService.getNeighbours();
+        } else {
+            mNeighbours = mApiService.getNeighboursFavorites();
+        }
+
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this));
     }
 
