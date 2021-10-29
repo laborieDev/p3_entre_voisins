@@ -59,11 +59,12 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     }
 
     /**
-     * Save changements of neighbour
+     * Set Favorite Neighbour
      */
-    public void saveNeighbour(Neighbour neighbour)
+    public void setFavorites(Neighbour neighbour, boolean isFavorite)
     {
         int position = neighbours.indexOf(neighbour);
+        neighbour.setIsFavorite(isFavorite);
         neighbours.set(position, neighbour);
     }
 }

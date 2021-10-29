@@ -45,8 +45,6 @@ public class SingleNeighbourActivity extends AppCompatActivity {
     public TextView mUserDescription;
     @BindView(R.id.add_to_favorites)
     public FloatingActionButton mAddToFavorites;
-    @BindView(R.id.remove_to_favorites)
-    public FloatingActionButton mRemoveToFavorites;
 
     /***** Get Neighbour Object *****/
     Neighbour mNeighbourSelected;
@@ -78,47 +76,20 @@ public class SingleNeighbourActivity extends AppCompatActivity {
         mUserWeb.setText("www.facebook.fr/" + mNeighbourSelected.getName().toLowerCase());
         mUserDescription.setText(mNeighbourSelected.getAboutMe());
 
-        if (mNeighbourSelected.getIsFavorite()) {
-            mAddToFavorites.setVisibility(View.NO_ID);
-        } else {
-            mRemoveToFavorites.setVisibility(View.VISIBLE);
-        }
+        mAddToFavorites.setImageResource(getFavoriteBtnID(mNeighbourSelected.getIsFavorite()));
 
         mAddToFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message;
+                String message = mNeighbourSelected.getName() + " a bien été ajouté(e) à vos favoris";
+                boolean nowIsFavorite = mNeighbourSelected.getIsFavorite();
 
-                if (mNeighbourSelected.getIsFavorite()) {
-                    return;
+                if (nowIsFavorite) {
+                    message = mNeighbourSelected.getName() + " a bien été retiré(e) de vos favoris";
                 }
 
-                mNeighbourSelected.isFavorite();
-                message = mNeighbourSelected.getName() + " a bien été ajouté(e) à vos favoris";
-
-                mApiService.saveNeighbour(mNeighbourSelected);
-                mAddToFavorites.setVisibility(View.NO_ID);
-                mRemoveToFavorites.setVisibility(View.VISIBLE);
-
-                Toast.makeText(SingleNeighbourActivity.this, message, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mRemoveToFavorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String message;
-
-                if (!mNeighbourSelected.getIsFavorite()) {
-                    return;
-                }
-
-                mNeighbourSelected.isNotFavorite();
-                message = mNeighbourSelected.getName() + " a bien été retiré(e) de vos favoris";
-
-                mApiService.saveNeighbour(mNeighbourSelected);
-                mRemoveToFavorites.setVisibility(View.NO_ID);
-                mAddToFavorites.setVisibility(View.VISIBLE);
+                mApiService.setFavorites(mNeighbourSelected, !nowIsFavorite);
+                mAddToFavorites.setImageResource(getFavoriteBtnID(!nowIsFavorite));
 
                 Toast.makeText(SingleNeighbourActivity.this, message, Toast.LENGTH_SHORT).show();
             }
@@ -140,5 +111,16 @@ public class SingleNeighbourActivity extends AppCompatActivity {
         Intent intent = new Intent(activity, SingleNeighbourActivity.class);
         intent.putExtra("Neighbour", neighbour);
         ActivityCompat.startActivity(activity, intent, null);
+    }
+
+    /**
+     * @param isFavorite
+     */
+    public static int getFavoriteBtnID(boolean isFavorite) {
+        if (isFavorite) {
+            return R.drawable.ic_yellow_star;
+        }
+
+        return R.drawable.ic_star_border_yellow_24dp;
     }
 }

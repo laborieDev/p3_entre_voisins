@@ -44,5 +44,5 @@ public interface NeighbourApiService {
      * Save changements of neighbour
      * @param neighbour
      */
-    void saveNeighbour(Neighbour neighbour);
+    void setFavorites(Neighbour neighbour, boolean isFavorite);
 }
