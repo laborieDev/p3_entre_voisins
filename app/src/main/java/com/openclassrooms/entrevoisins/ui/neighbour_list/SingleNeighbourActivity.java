@@ -116,7 +116,7 @@ public class SingleNeighbourActivity extends AppCompatActivity {
     /**
      * @param isFavorite
      */
-    public static int getFavoriteBtnID(boolean isFavorite) {
+    private int getFavoriteBtnID(boolean isFavorite) {
         if (isFavorite) {
             return R.drawable.ic_yellow_star;
         }

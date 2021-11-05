@@ -10,6 +10,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
+import com.openclassrooms.entrevoisins.utils.CustomViewMatcher;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 
 import org.junit.Before;
@@ -53,7 +54,7 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
-        onView(ViewMatchers.withId(R.id.list_neighbours))
+        onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 0))
                 .check(matches(hasMinimumChildCount(1)));
     }
 
@@ -63,11 +64,13 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
         // Given : We remove the element at position 2
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT));
+        onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 0))
+                .check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
-        onView(ViewMatchers.withId(R.id.list_neighbours))
+        onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 0))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT-1));
+        onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 0))
+                .check(withItemCount(ITEMS_COUNT-1));
     }
 }
