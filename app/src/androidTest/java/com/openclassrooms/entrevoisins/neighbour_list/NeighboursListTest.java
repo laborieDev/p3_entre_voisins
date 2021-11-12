@@ -14,9 +14,11 @@ import com.openclassrooms.entrevoisins.utils.CustomViewMatcher;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -31,10 +33,12 @@ import static org.hamcrest.core.IsNull.notNullValue;
  * Test class for list of neighbours
  */
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class NeighboursListTest {
 
     // This is fixed
     private static int ITEMS_COUNT = 12;
+    private static int FAVORITES_ITEMS_COUNT = 1;
 
     private ListNeighbourActivity mActivity;
 
@@ -52,7 +56,49 @@ public class NeighboursListTest {
      * We ensure that our recyclerview is displaying at least on item
      */
     @Test
-    public void myNeighboursList_shouldNotBeEmpty() {
+    public void A_myNeighboursFavoritesList_shouldNotBeEmpty() {
+        // First scroll to the position that needs to be matched and click on it.
+        onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 1))
+                .check(matches(hasMinimumChildCount(1)));
+    }
+
+    @Test
+    public void B_myNeighboursFavoritesList_addNeighbour() {
+        onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 1))
+                .check(withItemCount(FAVORITES_ITEMS_COUNT));
+
+        onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 0))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        onView(ViewMatchers.withId(R.id.add_to_favorites)).perform(click());
+
+        onView(ViewMatchers.withId(R.id.go_to_list)).perform(click());
+
+        onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 1))
+                .check(withItemCount(FAVORITES_ITEMS_COUNT + 1));
+    }
+
+    @Test
+    public void C_myNeighboursFavoritesList_removeNeighbour() {
+        onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 1))
+                .check(withItemCount(FAVORITES_ITEMS_COUNT + 1));
+
+        onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 0))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+
+        onView(ViewMatchers.withId(R.id.add_to_favorites)).perform(click());
+
+        onView(ViewMatchers.withId(R.id.go_to_list)).perform(click());
+
+        onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 1))
+                .check(withItemCount(FAVORITES_ITEMS_COUNT));
+    }
+
+    /**
+     * We ensure that our recyclerview is displaying at least on item
+     */
+    @Test
+    public void D_myNeighboursList_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
         onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 0))
                 .check(matches(hasMinimumChildCount(1)));
@@ -62,7 +108,7 @@ public class NeighboursListTest {
      * When we delete an item, the item is no more shown
      */
     @Test
-    public void myNeighboursList_deleteAction_shouldRemoveItem() {
+    public void E_myNeighboursList_deleteAction_shouldRemoveItem() {
         // Given : We remove the element at position 2
         onView(CustomViewMatcher.withIndex(ViewMatchers.withId(R.id.list_neighbours), 0))
                 .check(withItemCount(ITEMS_COUNT));
