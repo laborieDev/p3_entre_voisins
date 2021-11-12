@@ -50,9 +50,6 @@ public class SingleNeighbourActivity extends AppCompatActivity {
     Neighbour mNeighbourSelected;
     NeighbourApiService mApiService;
 
-    //public boolean isFavorite = false;
-    //private String favTab;
-
     @Override
     @SuppressLint({"RestrictedApi", "WrongConstant"})
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +66,13 @@ public class SingleNeighbourActivity extends AppCompatActivity {
                 .load(mNeighbourSelected.getAvatarUrl())
                 .into(mUserAvatar);
 
+        String neighbourWeb = "www.facebook.fr/" + mNeighbourSelected.getName().toLowerCase();
+
         mUserNameImg.setText(mNeighbourSelected.getName());
         mUserName.setText(mNeighbourSelected.getName());
         mUserAddress.setText(mNeighbourSelected.getAddress());
         mUserPhone.setText(mNeighbourSelected.getPhoneNumber());
-        mUserWeb.setText("www.facebook.fr/" + mNeighbourSelected.getName().toLowerCase());
+        mUserWeb.setText(neighbourWeb);
         mUserDescription.setText(mNeighbourSelected.getAboutMe());
 
         mAddToFavorites.setImageResource(getFavoriteBtnID(mNeighbourSelected.getIsFavorite()));
@@ -105,7 +104,6 @@ public class SingleNeighbourActivity extends AppCompatActivity {
 
     /**
      * Used to navigate to this activity
-     * @param activity
      */
     public static void navigate(FragmentActivity activity, Neighbour neighbour) {
         Intent intent = new Intent(activity, SingleNeighbourActivity.class);
@@ -113,9 +111,6 @@ public class SingleNeighbourActivity extends AppCompatActivity {
         ActivityCompat.startActivity(activity, intent, null);
     }
 
-    /**
-     * @param isFavorite
-     */
     private int getFavoriteBtnID(boolean isFavorite) {
         if (isFavorite) {
             return R.drawable.ic_yellow_star;

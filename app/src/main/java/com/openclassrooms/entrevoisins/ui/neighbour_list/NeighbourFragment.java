@@ -101,7 +101,6 @@ public class NeighbourFragment extends Fragment implements MyNeighbourCallback {
 
     /**
      * Fired if the user clicks on a delete button
-     * @param event
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
