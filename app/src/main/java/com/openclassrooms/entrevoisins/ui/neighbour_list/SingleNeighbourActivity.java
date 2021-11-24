@@ -98,8 +98,7 @@ public class SingleNeighbourActivity extends AppCompatActivity {
 
     @OnClick(R.id.go_to_list)
     void goToList() {
-        Intent intent = new Intent(this, ListNeighbourActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     /**
